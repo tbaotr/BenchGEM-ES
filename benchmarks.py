@@ -1,4 +1,4 @@
-# Adapted from: 
+# Adopted from: 
 # https://github.com/CMA-ES/pycma/blob/master/cma/fitness_functions.py
 import numpy as np
 from abstracts import ObjectiveFunction
@@ -6,7 +6,7 @@ from abstracts import ObjectiveFunction
 class Sphere(ObjectiveFunction):
     def __init__(self, dimension, shift=False):
         self.dimension = dimension
-        self.shift     = shift
+        self.shift = shift
         self.f_shift, self.x_shift = self._shift()
     
     def __call__(self, x):
@@ -19,7 +19,7 @@ class Sphere(ObjectiveFunction):
 class Rosenbrock(ObjectiveFunction):
     def __init__(self, dimension, shift=False):
         self.dimension = dimension
-        self.shift     = shift
+        self.shift = shift
         self.f_shift, self.x_shift = self._shift()
         self.alpha = 1e2
     
@@ -36,7 +36,7 @@ class Rosenbrock(ObjectiveFunction):
 class Rastrigin(ObjectiveFunction):
     def __init__(self, dimension, shift=False):
         self.dimension = dimension
-        self.shift     = shift
+        self.shift = shift
         self.f_shift, self.x_shift = self._shift()
     
     def __call__(self, x):
@@ -53,7 +53,7 @@ class Rastrigin(ObjectiveFunction):
 class Ackley(ObjectiveFunction):
     def __init__(self, dimension, shift=False):
         self.dimension = dimension
-        self.shift     = shift
+        self.shift = shift
         self.f_shift, self.x_shift = self._shift()
         self.a = 20
         self.b = 0.2
@@ -67,12 +67,32 @@ class Ackley(ObjectiveFunction):
     def info(self):
         return (self.f_shift, self.x_shift, "Ackley")
 
+class Lunacek(ObjectiveFunction):
+    def __init__(self, dimension, shift=False):
+        self.dimension = dimension
+        self.shift = shift
+        self.f_shift, self.x_shift = self._shift()
+    
+    def __call__(self, x):
+        x = np.copy(x) - self.x_shift
+        s = 1 - 1/(2*np.sqrt(self.dimension + 20) - 8.2)
+        mu1 = 2.5
+        mu2 = -np.sqrt(abs((mu1 ** 2 - 1.0) / s))
+        first_sum = np.sum(np.square(x - mu1), axis=-1)
+        second_sum = np.sum(np.square(x - mu2), axis=-1)
+        third_sum = self.dimension - np.sum(np.cos(2 * np.pi * (x - mu1)), axis=-1)
+        y = np.minimum(first_sum, self.dimension + second_sum) + 10 * third_sum
+        return y
+    
+    def info(self):
+        return (self.f_shift, self.x_shift, "Lunacek")
+
 
 class Manager(object):
     def __init__(self, dimension, seed=2022, shift=False):
         self.dimension = dimension
-        self.shift     = shift
-        self.rng       = np.random.RandomState(seed)
+        self.shift = shift
+        self.rng = np.random.RandomState(seed)
     
     def get_initial_solution(self):
         return self.rng.randn(self.dimension)
@@ -85,6 +105,6 @@ class Manager(object):
         elif id == 3:
             return Rastrigin(self.dimension, self.shift)
         elif id == 4:
-            return Lunacek(self.dimension, self.shift)        
+            return Lunacek(self.dimension, self.shift)
         elif id == 5:
             return Ackley(self.dimension, self.shift)
