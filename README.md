@@ -56,4 +56,6 @@ python plot.py
 ## Acknowledgement
 Our source code is inspired by:
 - [Guided Evolutionary Strategy](https://github.com/brain-research/guided-evolutionary-strategies)
-- [Self-Guided Evolutionary Strategy]()
+- [Self-Guided Evolutionary Strategy](https://github.com/IJCAI2020-SGES/SGES)
+- [pycma: CMA-ES in Python](https://github.com/CMA-ES/pycma)
+- [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](https://github.com/openai/evolution-strategies-starter)
