@@ -20,7 +20,38 @@ To perform experiments on RL, we install MuJoCo from [here](https://github.com/o
 
 ### Run
 
+- For BBOB:
+  - Move all files from outside to /scripts/bbob/
+  - Run bash files with our settings
+
+```
+bash run_es.sh
+bash run_ges.sh
+bash run_sges,sh
+```
+- For RL:
+  - Move all files from outside to /scripts/rl/vi/ (i is the version needed to perform)
+  - Run bash files with our settings
+```
+bash run_es.sh
+bash run_ges.sh
+bash run_sges,sh
+```
+
 ### Evaluate & Visualize
+
+- With folder *log* including files containing history of optimization process, run this command to get the synthetic files:
+
+```
+python aggregate.py
+```
+
+- To visualize the synthetic files:
+
+```
+python plot.py
+```
+
 
 ## Acknowledgement
 Our source code is inspired by:
